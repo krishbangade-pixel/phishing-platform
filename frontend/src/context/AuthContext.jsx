@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { supabase, isSupabaseConfigured } from '../services/supabase.js';
-import { MOCK_USER } from '../services/mockData.js';
 
 export const AuthContext = createContext(null);
 
@@ -33,19 +32,6 @@ export function AuthProvider({ children }) {
           setLoading(false);
         }
       } else {
-        // Fallback demo user if Supabase is unconfigured
-        const savedDemoUser = localStorage.getItem('phishshield_demo_user');
-        if (savedDemoUser) {
-          try {
-            const parsed = JSON.parse(savedDemoUser);
-            setUser(parsed);
-          } catch (e) {
-            setUser(MOCK_USER);
-          }
-        } else {
-          // Default demo logged-in user for immediate testing preview
-          setUser(MOCK_USER);
-        }
         setLoading(false);
       }
     }
@@ -63,15 +49,7 @@ export function AuthProvider({ children }) {
       if (error) throw error;
       return data;
     } else {
-      // Mock login for offline testing
-      const mockUserObj = {
-        ...MOCK_USER,
-        email,
-        user_metadata: { full_name: email.split('@')[0] || 'Analyst' }
-      };
-      setUser(mockUserObj);
-      localStorage.setItem('phishshield_demo_user', JSON.stringify(mockUserObj));
-      return { user: mockUserObj };
+      throw new Error('Authentication is not configured.');
     }
   };
 
@@ -87,16 +65,7 @@ export function AuthProvider({ children }) {
       if (error) throw error;
       return data;
     } else {
-      // Mock signup
-      const mockUserObj = {
-        id: `usr_${Date.now()}`,
-        email,
-        user_metadata: { full_name: fullName },
-        created_at: new Date().toISOString()
-      };
-      setUser(mockUserObj);
-      localStorage.setItem('phishshield_demo_user', JSON.stringify(mockUserObj));
-      return { user: mockUserObj };
+      throw new Error('Authentication is not configured.');
     }
   };
 
@@ -106,7 +75,6 @@ export function AuthProvider({ children }) {
     }
     setUser(null);
     setSession(null);
-    localStorage.removeItem('phishshield_demo_user');
   };
 
   const resetPassword = async (email) => {
@@ -136,13 +104,7 @@ export function AuthProvider({ children }) {
       setUser(data.user);
       return data.user;
     } else {
-      const updated = {
-        ...user,
-        user_metadata: { ...(user?.user_metadata || {}), full_name: fullName }
-      };
-      setUser(updated);
-      localStorage.setItem('phishshield_demo_user', JSON.stringify(updated));
-      return updated;
+      throw new Error('Authentication is not configured.');
     }
   };
 

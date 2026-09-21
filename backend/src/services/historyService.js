@@ -9,7 +9,7 @@ function getSupabaseClient(userToken) {
   if (userToken && typeof userToken === 'string' && userToken.trim() !== '') {
     return getAuthenticatedSupabaseClient(userToken);
   }
-  return supabaseAdmin;
+  throw new Error('Authentication token is required to access scan history');
 }
 
 export async function saveScanRecord(scanData, token = null) {
