@@ -69,7 +69,7 @@ export default function Navbar() {
               })}
             </div>
           ) : (
-            <div className="hidden md:flex items-center gap-3">
+            <div className="hidden lg:flex items-center gap-3">
               <Link to="/login" className="btn-secondary text-xs py-2 px-4">
                 Log In
               </Link>
@@ -81,7 +81,7 @@ export default function Navbar() {
 
           {/* User Profile & Actions */}
           {isAuthenticated && (
-            <div className="hidden md:flex items-center gap-3">
+            <div className="hidden lg:flex items-center gap-3">
               <Link
                 to="/profile"
                 className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-cyber-900 border border-slate-800 text-xs font-medium text-slate-200 hover:border-slate-700 transition-colors"
@@ -105,7 +105,7 @@ export default function Navbar() {
           )}
 
           {/* Mobile Menu Toggle Button */}
-          <div className="flex md:hidden items-center gap-2">
+          <div className="flex lg:hidden items-center gap-2">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-lg bg-cyber-900 border border-slate-800 text-slate-300 hover:text-white"
@@ -119,7 +119,7 @@ export default function Navbar() {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-cyber-950/95 border-b border-slate-800 px-4 pt-3 pb-5 space-y-2 animate-in slide-in-from-top-2">
+        <div className="lg:hidden bg-cyber-950/95 border-b border-slate-800 px-4 pt-3 pb-5 space-y-2 animate-in slide-in-from-top-2">
           {isAuthenticated ? (
             <>
               {navLinks.map((link) => {
